@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沖縄の魚クイズ</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; background-color: #e0f7fa; margin: 0; padding: 20px; }
+        h1 { color: #00796b; font-size: 24px; }
+        .quiz-container { margin-top: 20px; cursor: pointer; display: inline-block; width: 100%; }
+        img { width: 100%; max-width: 500px; border-radius: 15px; border: 5px solid #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        img:active { transform: scale(0.98); } /* タップした時に少し沈む演出 */
+        #fish-name { height: 60px; font-size: 28px; font-weight: bold; color: #d84315; margin-top: 20px; }
+        .hint { color: #555; font-size: 16px; margin-top: 10px; background: rgba(255,255,255,0.5); display: inline-block; padding: 5px 15px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>沖縄の魚クイズ</h1>
+
+    <div class="quiz-container" onclick="handleTap()">
+        <img id="fish-image" src="" alt="魚の写真">
+        <div id="fish-name"></div>
+        <p id="hint-text" class="hint">この魚の名前は？（タップで正解）</p>
+    </div>
+
+    <script>
+        // 魚のデータのリスト（修正済み）
+        const fishList = [
+            { name: "アカマツカサ", image: "fish1.jpg" },
+            { name: "ハリセンボン", image: "fish2.jpg" },
+            { name: "アオウミガメ", image: "fish3.jpg" },
+            { name: "クマノミ", image: "fish4.jpg" },
+            { name: "ムラサメモンガラ", image: "fish5.jpg" },
+            { name: "ゴマモンガラ", image: "fish6.jpg" },
+            { name: "カクレクマノミ", image: "fish7.jpg" },
+            { name: "ロクセンスズメダイ", image: "fish8.jpg" },
+            { name: "ナンヨウハギ", image: "fish9.jpg" },
+            { name: "ハタタテハゼ", image: "fish10.jpg" },
+            { name: "ナンヨウツバメウオ", image: "fish11.jpg" },
+            { name: "ミナミハコフグ", image: "fish17.jpg" },
+            { name: "タテジマキンチャクダイ", image: "fish18.jpg" },
+            { name: "タテジマキンチャクダイ（幼魚）", image: "fish19.jpg" },
+            { name: "ヒメテングハギ", image: "fish20.jpg" },
+            { name: "マンタ", image: "fish21.jpg" },
+            { name: "ヨスジフエダイ", image: "fish22.jpg" },
+            { name: "セジロクマノミ", image: "fish23.jpg" },
+            { name: "ハナミノカサゴ", image: "fish24.jpg" },
+            { name: "ハナビラクマノミ", image: "fish25.jpg" },
+            { name: "サザナミヤッコ", image: "fish26.jpg" }, // カンマを修正
+            { name: "サザナミヤッコ(幼魚)", image: "fish33.jpg" }, // カンマを追加
+            { name: "ツノダシ", image: "fish27.jpg" },
+            { name: "テングカワハギ", image: "fish28.jpg" },
+            { name: "カガミチョウチョウウオ", image: "fish29.jpg" },
+            { name: "ホンソメワケベラ", image: "fish30.jpg" },
+            { name: "ミスジチョウチョウウオ", image: "fish31.jpg" },
+            { name: "デバスズメダイ", image: "fish32.jpg" },
+            { name: "ハマクマノミ", image: "fish34.jpg" },
+            { name: "ヒメブダイ", image: "fish35.jpg" },
+            { name: "ウミヘビ", image: "fish36.jpg" },
+            { name: "ロウニンアジ", image: "fish37.jpg" },
+            { name: "シマハギ", image: "fish38.jpg" }
+        ];
+
+        // 順番をバラバラにする（シャッフル）
+        fishList.sort(() => Math.random() - 0.5);
+
+        let currentIndex = 0;
+        let isNameVisible = false;
+
+        // 最初の画像を表示
+        document.getElementById('fish-image').src = fishList[0].image;
+
+        function handleTap() {
+            const nameElement = document.getElementById('fish-name');
+            const imageElement = document.getElementById('fish-image');
+            const hintElement = document.getElementById('hint-text');
+
+            if (!isNameVisible) {
+                // 1回目のタップ：名前を表示
+                nameElement.innerText = fishList[currentIndex].name;
+                hintElement.innerText = "タップで次の魚へ";
+                isNameVisible = true;
+            } else {
+                // 2回目のタップ：次のクイズへ
+                isNameVisible = false;
+                nameElement.innerText = "";
+                hintElement.innerText = "この魚の名前は？（タップで正解）";
+                currentIndex = (currentIndex + 1) % fishList.length;
+                imageElement.src = fishList[currentIndex].image;
+            }
+        }
+    </script>
+</body>
+</html>
